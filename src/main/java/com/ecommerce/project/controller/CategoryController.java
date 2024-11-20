@@ -21,6 +21,7 @@ public class CategoryController {
 
     @PostMapping("/api/public/categories")
     public String createCategory(@RequestBody Category category) {
+        categories.add(category);
         return "Category added successfully";
     }
 }
