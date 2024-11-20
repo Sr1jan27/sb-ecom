@@ -12,7 +12,7 @@ public class CategoryController {
 
     private List<Category> categories = new ArrayList<>();
 
-    @GetMapping("/public/categories")
+    @GetMapping("/api/public/categories")
     public List<Category> getAllCategories() {
         return categories;
     }
