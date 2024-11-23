@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -38,11 +39,26 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category updateCategory(Category category, Long categoryId) {
-        Category toBeUpdatedCategory = categories.stream()
+//        Category toBeUpdatedCategory = categories.stream()
+//                .filter( c-> c.getCategoryId().equals(categoryId))
+//                .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found"));
+//        toBeUpdatedCategory.setCategoryName(category.getCategoryName());
+//        return toBeUpdatedCategory;
+
+        // or we can write the same logic as
+        Optional<Category> toBeUpdatedCategory = categories.stream()
                 .filter( c-> c.getCategoryId().equals(categoryId))
-                .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found"));
-        toBeUpdatedCategory.setCategoryName(category.getCategoryName());
-        return toBeUpdatedCategory;
+                .findFirst();
+
+        if(toBeUpdatedCategory.isPresent()) {
+            Category exixtingCategroy = toBeUpdatedCategory.get();
+            exixtingCategroy.setCategoryName(category.getCategoryName());
+            return exixtingCategroy;
+        }else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category with categoryId:"+ categoryId+" Not Found");
+        }
+
+
     }
 
 }
