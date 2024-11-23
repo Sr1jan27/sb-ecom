@@ -37,10 +37,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void updateCategory(Category category) {
+    public void updateCategory(Category category, Long categoryId) {
         Category toBeUpdatedCategory = categories.stream()
-                .filter( c-> c.getCategoryId().equals(category.getCategoryId())
-                .findFirst();
+                .filter( c-> c.getCategoryId().equals(categoryId))
+                .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found"));
+        toBeUpdatedCategory.setCategoryName(category.getCategoryName());
     }
 
 }
