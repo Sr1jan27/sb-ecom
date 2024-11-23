@@ -36,4 +36,11 @@ public class CategoryServiceImpl implements CategoryService {
         return "Category with categoryId:"+ category.getCategoryId() + " deleted";
     }
 
+    @Override
+    public void updateCategory(Category category) {
+        Category toBeUpdatedCategory = categories.stream()
+                .filter( c-> c.getCategoryId().equals(category.getCategoryId())
+                .findFirst();
+    }
+
 }
