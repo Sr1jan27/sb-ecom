@@ -1,5 +1,8 @@
 package com.ecommerce.project.model;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Category {
 
     private Long categoryId;
