@@ -28,12 +28,11 @@ public class Category {
         this.categoryId = categoryId;
     }
 
-//     without getters and setters the value of name is not getting saved and also its not showing in the database
-//    public String getCategoryName() {
-//        return categoryName;
-//    }
-//
-//    public void setCategoryName(String categoryName) {
-//        this.categoryName = categoryName;
-//    }
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 }
