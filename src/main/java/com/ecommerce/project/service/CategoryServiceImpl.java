@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    List<Category> categories = categoryRepository.findAll();
+//    List<Category> categories = categoryRepository.findAll();
     @Override
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public String deleteCategory(Long categoryId) {
-//        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
         Category category = categories.stream()
                 .filter(c->c.getCategoryId().equals(categoryId))
                 .findFirst()
@@ -55,7 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
 //        return toBeUpdatedCategory;
 
         // or we can write the same logic as
-//        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
         Optional<Category> toBeUpdatedCategory = categories.stream()
                 .filter( c-> c.getCategoryId().equals(categoryId))
                 .findFirst();
@@ -63,7 +63,8 @@ public class CategoryServiceImpl implements CategoryService {
         if(toBeUpdatedCategory.isPresent()) {
             Category exixtingCategroy = toBeUpdatedCategory.get();
             exixtingCategroy.setCategoryName(category.getCategoryName());
-            return exixtingCategroy;
+            Category savedCategory = categoryRepository.save(exixtingCategroy);
+            return savedCategory;
         }else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category with categoryId:"+ categoryId+" Not Found");
         }
