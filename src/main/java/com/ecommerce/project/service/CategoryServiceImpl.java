@@ -1,7 +1,10 @@
 package com.ecommerce.project.service;
 
 import com.ecommerce.project.model.Category;
+import com.ecommerce.project.repositories.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -12,28 +15,34 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private List<Category> categories = new ArrayList<>();
+//    private List<Category> categories = new ArrayList<>();
 
     private Long nextId = 1L;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
     @Override
     public List<Category> getAllCategories() {
-        return categories;
+        return categoryRepository.findAll();
     }
 
     @Override
     public void createCategory(Category category) {
         category.setCategoryId(nextId++);
-        categories.add(category);
+//        categories.add(category);
+        categoryRepository.save(category);
     }
 
     @Override
     public String deleteCategory(Long categoryId) {
+        List<Category> categories = categoryRepository.findAll();
         Category category = categories.stream()
                 .filter(c->c.getCategoryId().equals(categoryId))
                 .findFirst()
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found"));
 
-        categories.remove(category);
+//        categoryRepository.delete(category);
+        categoryRepository.deleteById(categoryId);
         return "Category with categoryId:"+ category.getCategoryId() + " deleted";
     }
 
@@ -46,6 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
 //        return toBeUpdatedCategory;
 
         // or we can write the same logic as
+        List<Category> categories = categoryRepository.findAll();
         Optional<Category> toBeUpdatedCategory = categories.stream()
                 .filter( c-> c.getCategoryId().equals(categoryId))
                 .findFirst();
