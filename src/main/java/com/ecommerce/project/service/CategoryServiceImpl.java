@@ -12,12 +12,10 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private Long nextId = 1L;
 
     @Autowired
     private CategoryRepository categoryRepository;
 
-//    List<Category> categories = categoryRepository.findAll();
     @Override
     public List<Category> getAllCategories() {
         List<Category> categoryList = categoryRepository.findAll();
@@ -33,7 +31,6 @@ public class CategoryServiceImpl implements CategoryService {
         if(savedCategory != null){
             throw new APIException("Category with the name " +category.getCategoryName()+" already exists!");
         }
-        category.setCategoryId(nextId++);
         categoryRepository.save(category);
     }
 
