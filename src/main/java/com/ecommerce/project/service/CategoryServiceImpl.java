@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void createCategory(Category category) {
         Category savedCategory = categoryRepository.findByCategoryName(category.getCategoryName());
         if(savedCategory != null){
-            throw new APIException("Category with the name already present");
+            throw new APIException("Category with the name already exists!");
         }
         category.setCategoryId(nextId++);
         categoryRepository.save(category);
