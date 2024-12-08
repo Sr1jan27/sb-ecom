@@ -3,8 +3,10 @@ package com.ecommerce.project.service;
 import com.ecommerce.project.exceptions.APIException;
 import com.ecommerce.project.exceptions.ResourceNotFoundException;
 import com.ecommerce.project.model.Category;
+import com.ecommerce.project.payload.CategoryDTO;
 import com.ecommerce.project.payload.CategoryResponse;
 import com.ecommerce.project.repositories.CategoryRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +19,20 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public CategoryResponse getAllCategories() {
-        List<Category> categoryList = categoryRepository.findAll();
-        if(categoryList.isEmpty()){
+        List<Category> categories = categoryRepository.findAll();
+        if(categories.isEmpty()){
             throw new APIException("No category present in database");
         }
-        return categoryRepository.findAll();
+        List<CategoryDTO> categoryDTOS = categories.stream()
+                .map(category -> modelMapper.map(category, CategoryDTO.class)).toList();
+        CategoryResponse categoryResponse = new CategoryResponse();
+        categoryResponse.setContent(categoryDTOS);
+        return categoryResponse;
     }
 
     @Override
@@ -32,6 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
         if(savedCategory != null){
             throw new APIException("Category with the name " +category.getCategoryName()+" already exists!");
         }
+
         categoryRepository.save(category);
     }
 
