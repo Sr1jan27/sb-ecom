@@ -20,12 +20,6 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-
-    @GetMapping("/echo")
-    public ResponseEntity<String> echo(@RequestParam(name = "message") String message){
-        return new ResponseEntity<>("the echoed message is : "+ message, HttpStatus.OK);
-    }
-
     @GetMapping("public/categories")
     public ResponseEntity<CategoryResponse> getAllCategories() {
         CategoryResponse categoryResponse = categoryService.getAllCategories();
