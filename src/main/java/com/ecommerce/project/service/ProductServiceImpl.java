@@ -27,8 +27,11 @@ public class ProductServiceImpl implements ProductService{
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Category", "categoryId", categoryId));
+        product.setImage("default.png");
         product.setCategory(category);
-        double specialPrice =
-        return ;
+        double specialPrice = product.getPrice() -
+                (product.getDiscount()*0.01)*product.getPrice();
+        Product savedProduct = productRepository.save(product);
+        return modelMapper.map(savedProduct, ProductDTO.class);
     }
 }
