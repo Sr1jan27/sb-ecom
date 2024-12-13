@@ -19,6 +19,7 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @
     private ModelMapper modelMapper;
 
 
@@ -30,9 +31,9 @@ public class ProductServiceImpl implements ProductService{
         product.setImage("default.png");
         product.setCategory(category);
         double specialPrice = product.getPrice() -
-                (product.getDiscount()*0.01)*product.getPrice();
+                ((product.getDiscount() * 0.01) * product.getPrice());
         product.setSpecialPrice(specialPrice);
         Product savedProduct = productRepository.save(product);
-        return modelMapper.map(savedProduct, ProductDTO.class);
+        return new modelMapper.map(savedProduct, ProductDTO.class);
     }
 }
