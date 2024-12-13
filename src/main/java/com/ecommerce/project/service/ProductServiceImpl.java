@@ -34,6 +34,6 @@ public class ProductServiceImpl implements ProductService{
                 ((product.getDiscount() * 0.01) * product.getPrice());
         product.setSpecialPrice(specialPrice);
         Product savedProduct = productRepository.save(product);
-        return new modelMapper.map(savedProduct, ProductDTO.class);
+        return modelMapper.map(savedProduct, ProductDTO.class);
     }
 }
