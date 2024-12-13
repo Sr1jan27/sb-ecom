@@ -19,7 +19,7 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @
+    @Autowired
     private ModelMapper modelMapper;
 
 
