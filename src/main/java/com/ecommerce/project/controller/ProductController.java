@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class ProductController {
 
-    @Autowired
+    @Autowired 
     ProductService productService;
 
     @PostMapping("/admin/categories/{categoryId}/product")
