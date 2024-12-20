@@ -122,7 +122,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     private String uploadImage(String path, MultipartFile file) throws IOException {
-        String originalFileName = file.getName(); // this will return  just the parameter name of the file not whole file name with extension
+        String originalFileName = file.getOriginalFilename(); // this will return  whole file name with the extension also
         String randomId = UUID.randomUUID().toString();
         String fileName = randomId.concat(originalFileName.substring(originalFileName.lastIndexOf(".")));
         String filePath = path + File.pathSeparator +fileName;
