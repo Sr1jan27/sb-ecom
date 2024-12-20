@@ -55,7 +55,7 @@ public class ProductController {
     }
 
     @PutMapping("/products/{productId}/image")
-    public ResponseEntity<ProductDTO> updateProductImage(@PathVariable Long productId, @RequestParam("Image") MultipartFile image) throws IOException {
+    public ResponseEntity<ProductDTO> updateProductImage(@PathVariable Long productId, @RequestParam("image") MultipartFile image) throws IOException {
         ProductDTO updatedProductDTO = productService.updateProductImage(productId, image);
         return new ResponseEntity<>(updatedProductDTO, HttpStatus.OK);
     }
