@@ -37,6 +37,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductDTO addProduct(ProductDTO productDTO, Long categoryId) {
+        // check if product is already present or not
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Category", "categoryId", categoryId));
@@ -52,6 +53,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductResponse getAllProducts() {
+
+        // check if procuts size is 0 then give no product added
         List<Product> products = productRepository.findAll();
         List<ProductDTO> productDTOs = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
@@ -63,6 +66,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductResponse getProductByCategoryId(Long categoryId) {
+        // check if products size is 0 then give no product added
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Category", "categoryId", categoryId));
@@ -77,6 +81,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductResponse getProductByKeyword(String keyword) {
+        // check if products size is 0 then give no product added
         List<Product> products = productRepository.findByProductNameLikeIgnoreCase('%'+keyword+'%');
         List<ProductDTO> productDTOs = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
