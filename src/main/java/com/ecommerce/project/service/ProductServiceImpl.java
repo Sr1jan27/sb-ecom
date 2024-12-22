@@ -56,6 +56,9 @@ public class ProductServiceImpl implements ProductService{
 
         // check if procuts size is 0 then give no product added
         List<Product> products = productRepository.findAll();
+        if(products.isEmpty()){
+
+        }
         List<ProductDTO> productDTOs = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
@@ -71,6 +74,9 @@ public class ProductServiceImpl implements ProductService{
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Category", "categoryId", categoryId));
         List<Product> products = productRepository.findByCategoryOrderByPriceAsc(category);
+        if(products.isEmpty()){
+
+        }
         List<ProductDTO> productDTOs = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
@@ -83,6 +89,9 @@ public class ProductServiceImpl implements ProductService{
     public ProductResponse getProductByKeyword(String keyword) {
         // check if products size is 0 then give no product added
         List<Product> products = productRepository.findByProductNameLikeIgnoreCase('%'+keyword+'%');
+        if(products.isEmpty()){
+
+        }
         List<ProductDTO> productDTOs = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
