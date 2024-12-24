@@ -106,7 +106,7 @@ public class ProductServiceImpl implements ProductService{
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Category", "categoryId", categoryId));
-        Page<Product> productPage = (Page<Product>) productRepository.findByCategoryOrderByPriceAsc(pageDetails, category);
+        Page<Product> productPage = productRepository.findByCategoryOrderByPriceAsc(pageDetails, category);
 //        List<Product> products = productRepository.findByCategoryOrderByPriceAsc(category);
         List<Product> products = productPage.getContent();
         if(products.isEmpty()){
