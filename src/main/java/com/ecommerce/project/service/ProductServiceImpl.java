@@ -97,12 +97,18 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductResponse getProductByCategoryId(Long categoryId) {
+    public ProductResponse getProductByCategoryId(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder, Long categoryId) {
         // check if products size is 0 then give no product added
+        Sort sortByAndOrder = sortOrder.equals("asc")
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Category", "categoryId", categoryId));
-        List<Product> products = productRepository.findByCategoryOrderByPriceAsc(category);
+        Page<Product> productPage = (Page<Product>) productRepository.findByCategoryOrderByPriceAsc(pageDetails, category);
+//        List<Product> products = productRepository.findByCategoryOrderByPriceAsc(category);
+        List<Product> products = productPage.getContent();
         if(products.isEmpty()){
             throw new APIException("No Products present");
         }
