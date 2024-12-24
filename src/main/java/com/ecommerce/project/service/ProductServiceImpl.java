@@ -117,18 +117,29 @@ public class ProductServiceImpl implements ProductService{
                 .toList();
         ProductResponse productResponse = new ProductResponse();
         productResponse.setContent(productDTOs);
+        productResponse.setPageNumber(productPage.getNumber());
+        productResponse.setPageSize(productPage.getSize());
+        productResponse.setTotalElements(productPage.getTotalElements());
+        productResponse.setTotalPages(productPage.getTotalPages());
+        productResponse.setLastPage(productPage.isLast());
         return productResponse;
     }
 
     @Override
-    public ProductResponse getProductByKeyword(String keyword) {
+    public ProductResponse getProductByKeyword(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder, String keyword) {
         // check if products size is 0 then give no product added
-        List<Product> products = productRepository.findByProductNameLikeIgnoreCase('%'+keyword+'%');
+        Sort sortByAndOrder = sortOrder.equals("asc")
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+        Page<Product> productPage = productRepository.findByProductNameLikeIgnoreCase(pageDetails, '%'+keyword+'%');
+        List<Product> products = productPage.getContent();
         List<ProductDTO> productDTOs = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
         ProductResponse productResponse = new ProductResponse();
         productResponse.setContent(productDTOs);
+
         return productResponse;
     }
 

@@ -13,7 +13,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByCategoryOrderByPriceAsc(Pageable pageDetails, Category category);
 
-    List<Product> findByProductNameLikeIgnoreCase(String keyword);
+    Page<Product> findByProductNameLikeIgnoreCase(Pageable pageDetails, String keyword);
 
     Product findByProductName(String productName);
 }
