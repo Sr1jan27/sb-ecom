@@ -69,12 +69,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductResponse getAllProducts() {
-
-        // check if procuts size is 0 then give no product added
+        // check if products size is 0 then give no product added
         List<Product> products = productRepository.findAll();
-        if(products.isEmpty()){
-            throw new APIException("No Products present");
-        }
         List<ProductDTO> productDTOs = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
@@ -105,9 +101,6 @@ public class ProductServiceImpl implements ProductService{
     public ProductResponse getProductByKeyword(String keyword) {
         // check if products size is 0 then give no product added
         List<Product> products = productRepository.findByProductNameLikeIgnoreCase('%'+keyword+'%');
-        if(products.isEmpty()){
-
-        }
         List<ProductDTO> productDTOs = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
