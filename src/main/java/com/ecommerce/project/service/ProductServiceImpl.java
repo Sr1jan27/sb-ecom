@@ -137,6 +137,9 @@ public class ProductServiceImpl implements ProductService{
         List<ProductDTO> productDTOs = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
+        if(productDTOs.size()==0){
+            throw new APIException("No products found with this keyword");
+        }
         ProductResponse productResponse = new ProductResponse();
         productResponse.setContent(productDTOs);
         productResponse.setPageNumber(productPage.getNumber());
