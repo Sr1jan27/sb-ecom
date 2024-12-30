@@ -123,7 +123,6 @@ public class ProductServiceImpl implements ProductService{
         productResponse.setTotalPages(productPage.getTotalPages());
         productResponse.setLastPage(productPage.isLast());
         return productResponse;
-        
     }
 
     @Override
