@@ -1,9 +1,6 @@
 package com.ecommerce.project.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -11,5 +8,6 @@ import lombok.NoArgsConstructor;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "address_id")
     private Long addressId;
 }
