@@ -2,6 +2,7 @@ package com.ecommerce.project.controller;
 
 import com.ecommerce.project.security.jwt.JwtUtils;
 import com.ecommerce.project.security.request.LoginRequest;
+import com.ecommerce.project.security.response.UserInfoResponse;
 import com.ecommerce.project.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
